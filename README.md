@@ -190,6 +190,10 @@ Now that the UPF is ready, you may measure its performance with TRex.
 The maximum number of times in which `PFCP Heartbeat Response` can be sent to UPF is the value of the `COUNTER` parameter.
 Please change the value as necessary.
 
+---
+
+I would like to thank the excellent developers and all the contributors of Scapy and [801room/upf_p4_poc/test_script/pfcp_request.py](https://github.com/801room/upf_p4_poc/blob/main/test_script/pfcp_request.py).
+
 <a id="sample_conf"></a>
 
 ## Sample Configurations
