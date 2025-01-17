@@ -48,7 +48,7 @@ Each VMs are as follows.
 | --- | --- | --- | --- | --- | --- | --- |
 | VM1 | Simple PFCP Client | 192.168.0.111/24 | Ubuntu 24.04 | 1 | 1GB | 10GB |
 | VM-TG | TRex<br>Traffic Generator | 192.168.0.131/24 | Ubuntu 22.04 | 3 | 8GB | 20GB |
-| VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04 | 2 | 8GB | 20GB |
+| VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04<br>or 22.04 | 2 | 8GB | 20GB |
 
 The network interfaces of each VM are as follows.
 | VM | Device | Model | Linux Bridge | IP address | Interface | Under<br>DPDK |
