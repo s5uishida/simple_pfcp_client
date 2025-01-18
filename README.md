@@ -17,7 +17,7 @@ This is intended as a preparation for measuring the performance of open source U
   - [Install required packages](#install_packages)
   - [Setup venv](#setup_venv)
   - [Install Scapy](#install_scapy)
-  - [Change pfcp.py](#change_pfcp)
+  - [Modify pfcp.py](#modify_pfcp)
   - [Install pfcp_request.py](#install_pfcp)
 - [Set parameters in pfcp_request.py](#set_param)
 - [Run pfcp_request.py](#run)
@@ -116,9 +116,9 @@ Set venv to `~/venv`.
 (venv) root@pfcp:~# pip3 install scapy
 ```
 
-<a id="change_pfcp"></a>
+<a id="modify_pfcp"></a>
 
-### Change pfcp.py
+### Modify pfcp.py
 
 According to `3GPP TS 29.244 - 8.2.118 3GPP Interface Type`, add interface types `SGi` and `N6` in `pfcp.py` as follows.
 
