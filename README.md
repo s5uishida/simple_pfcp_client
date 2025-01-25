@@ -146,6 +146,7 @@ Get [pfcp_request.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/
 # wget https://github.com/s5uishida/simple_pfcp_client/raw/refs/heads/main/src/pfcp_request.py
 ```
 Also, referring to [801room/upf_p4_poc/test_script/pfcp_request.py](https://github.com/801room/upf_p4_poc/blob/main/test_script/pfcp_request.py), I wrote this script to configure the open source UPFs - Open5GS UPF, free5GC UPF, UPG-VPP and eUPF.
+If using UPF which requires QER in PFCP Session Establishment Request, please refer to [pfcp_request_qer.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request_qer.py).
 
 <a id="set_param"></a>
 
@@ -165,6 +166,13 @@ Set the following parameters written in `pfcp_request.py`.
 | PFCP_CP_IFACE | "ens20" |
 | TEID | 1 |
 | COUNTER | 100 |
+
+If using `pfcp_request_qer.py`, please set the following additional parameters. The unit is Kbps.
+
+| Item | Value (my environment) |
+| --- | --- |
+| UL_MBR | 200000000 |
+| DL_MBR | 200000000 |
 
 <a id="run"></a>
 
@@ -204,4 +212,5 @@ I would like to thank the excellent developers and all the contributors of Scapy
 
 ## Changelog (summary)
 
+- [2025.01.25] Added the description of the case when using UPF which requires QER in PFCP Session Establishment Request.
 - [2025.01.16] Initial release.
