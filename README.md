@@ -173,6 +173,8 @@ If using `pfcp_request_qer.py`, please set the following additional parameters. 
 | --- | --- |
 | UL_MBR | 200000000 |
 | DL_MBR | 200000000 |
+| UL_GBR | 200000000 |
+| DL_GBR | 200000000 |
 
 <a id="run"></a>
 
