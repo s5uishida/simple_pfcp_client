@@ -4,7 +4,7 @@ from random import getrandbits
 from scapy.contrib.pfcp import CauseValues, IE_3GPP_InterfaceType, IE_APN_DNN, IE_ApplyAction, IE_Cause, \
     IE_CreateFAR, IE_CreatePDR, IE_CreateQER, IE_CreateURR, IE_DestinationInterface, \
     IE_CPFunctionFeatures, IE_DurationMeasurement, IE_EndTime, IE_EnterpriseSpecific, IE_FAR_Id, \
-    IE_ForwardingParameters, IE_FSEID, IE_GateStatus, IE_MeasurementMethod,IE_OuterHeaderCreation, \
+    IE_ForwardingParameters, IE_FSEID, IE_GateStatus, IE_GBR, IE_MeasurementMethod,IE_OuterHeaderCreation, \
     IE_MBR, IE_NetworkInstance, IE_NodeId, IE_PDI, IE_PDNType, IE_PDR_Id, IE_Precedence, \
     IE_QER_Id, IE_QFI, IE_QueryURR, IE_RecoveryTimeStamp, IE_RedirectInformation, IE_ReportType, \
     IE_ReportingTriggers, IE_SDF_Filter, IE_SourceInterface, IE_StartTime, \
@@ -37,6 +37,8 @@ TEID = 1
 COUNTER = 100
 UL_MBR = 200000000 # Kbps
 DL_MBR = 200000000 # Kbps
+UL_GBR = 200000000 # Kbps
+DL_GBR = 200000000 # Kbps
 
 def seid():
     return uuid.uuid4().int & (1 << 64) - 1
@@ -140,6 +142,7 @@ class PfcpSkeleton(object):
                 IE_QER_Id(id=1),
                 IE_GateStatus(ul="OPEN",dl="OPEN"),
                 IE_MBR(ul=UL_MBR,dl=DL_MBR),
+                IE_GBR(ul=UL_GBR,dl=DL_GBR),
                 IE_QFI(QFI=1)
             ]),
 
