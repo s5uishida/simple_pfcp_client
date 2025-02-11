@@ -33,7 +33,8 @@ UE_IP_V4 = "10.45.0.2"
 NWI = "internet"
 APN_DNN = "internet"
 PFCP_CP_IFACE = "ens20"
-TEID = 1
+UL_TEID = 1
+DL_TEID = 2
 COUNTER = 100
 
 def seid():
@@ -100,7 +101,7 @@ class PfcpSkeleton(object):
                 IE_Precedence(precedence=65535),
                 IE_PDI(IE_list=[
                     IE_SourceInterface(interface="Access"),
-                    IE_FTEID(V4=1,TEID=TEID,ipv4=N3_IP_V4),
+                    IE_FTEID(V4=1,TEID=UL_TEID,ipv4=N3_IP_V4),
                     IE_NetworkInstance(instance=NWI),
                     IE_SDF_Filter(
                         FD=1,
@@ -118,7 +119,7 @@ class PfcpSkeleton(object):
                 IE_ForwardingParameters(IE_list=[
                     IE_DestinationInterface(interface="Access"),
                     IE_NetworkInstance(instance=NWI),
-                    IE_OuterHeaderCreation(GTPUUDPIPV4=1,TEID=TEID,ipv4=GNB_IP_V4),
+                    IE_OuterHeaderCreation(GTPUUDPIPV4=1,TEID=DL_TEID,ipv4=GNB_IP_V4),
                     IE_3GPP_InterfaceType(interface_type="N3 3GPP Access")
                 ])
             ]),
