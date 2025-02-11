@@ -76,9 +76,9 @@ Linux Bridges of Proxmox VE are as follows.
 | vmbr6 | 192.168.16.0/24 | N6 |
 
 UE IP address and TEID are as follows.
-| UE IP address | TEID |
-| --- | --- |
-| 10.45.0.2/24 | 0x00000001 |
+| UE IP address | UpLink TEID | DownLink TEID |
+| --- | --- | --- |
+| 10.45.0.2/24 | 0x00000001 | 0x00000002 |
 
 <a id="install"></a>
 
@@ -164,7 +164,8 @@ Set the following parameters written in `pfcp_request.py`.
 | NWI | "internet" |
 | APN_DNN | "internet" |
 | PFCP_CP_IFACE | "ens20" |
-| TEID | 1 |
+| UL_TEID | 1 |
+| DL_TEID | 2 |
 | COUNTER | 100 |
 
 If using `pfcp_request_qer.py`, please set the following additional parameters. The unit is Kbps.
@@ -184,14 +185,14 @@ First start UPF. Then, to configure UPF, run `pfcp_request.py` as follows.
 ```
 # source ~/venv/bin/activate
 (venv) root@pfcp:~# python3 pfcp_request.py 
-2025-01-16 20:10:03,627 - __main__ - INFO - REQ: <PFCPAssociationSetupRequest  IE_list=[<IE_NodeId  id_type=IPv4 ipv4=192.168.14.111 |>, <IE_RecoveryTimeStamp  timestamp=3946047003 |>, <IE_CPFunctionFeatures  |>] |>
+2025-02-11 12:02:03,765 - __main__ - INFO - REQ: <PFCPAssociationSetupRequest  IE_list=[<IE_NodeId  id_type=IPv4 ipv4=192.168.14.111 |>, <IE_RecoveryTimeStamp  timestamp=3948264123 |>, <IE_CPFunctionFeatures  |>] |>
 .
 Sent 1 packets.
-2025-01-16 20:10:03,650 - __main__ - INFO - REQ: <PFCPSessionEstablishmentRequest  IE_list=[<IE_NodeId  id_type=IPv4 ipv4=192.168.14.111 |>, <IE_FSEID  v4=1 seid=0x920d4499c510b251 ipv4=192.168.14.111 |>, <IE_CreatePDR  IE_list=[<IE_PDR_Id  id=1 |>, <IE_Precedence  precedence=65535 |>, <IE_PDI  IE_list=[<IE_SourceInterface  interface=Core |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_UE_IP_Address  SD=1 V4=1 ipv4=10.45.0.2 |>, <IE_3GPP_InterfaceType  interface_type=N6 |>] |>, <IE_FAR_Id  id=1 |>] |>, <IE_CreatePDR  IE_list=[<IE_PDR_Id  id=2 |>, <IE_Precedence  precedence=65535 |>, <IE_PDI  IE_list=[<IE_SourceInterface  interface=Access |>, <IE_FTEID  V4=1 TEID=0x1 ipv4=192.168.13.151 |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_SDF_Filter  FD=1 flow_description=b'permit out ip from any to assigned' |>, <IE_QFI  QFI=1 |>, <IE_3GPP_InterfaceType  interface_type=N3 3GPP Access |>] |>, <IE_FAR_Id  id=2 |>, <IE_OuterHeaderRemoval  |>] |>, <IE_CreateFAR  IE_list=[<IE_FAR_Id  id=1 |>, <IE_ApplyAction  FORW=1 |>, <IE_ForwardingParameters  IE_list=[<IE_DestinationInterface  interface=Access |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_OuterHeaderCreation  GTPUUDPIPV4=1 TEID=0x1 ipv4=192.168.13.131 |>, <IE_3GPP_InterfaceType  interface_type=N3 3GPP Access |>] |>] |>, <IE_CreateFAR  IE_list=[<IE_FAR_Id  id=2 |>, <IE_ApplyAction  FORW=1 |>, <IE_ForwardingParameters  IE_list=[<IE_DestinationInterface  interface=Core |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_3GPP_InterfaceType  interface_type=N6 |>] |>] |>, <IE_PDNType  pdn_type=IPv6 |>, <IE_APN_DNN  apn_dnn=b'internet' |>] |>
+2025-02-11 12:02:03,783 - __main__ - INFO - REQ: <PFCPSessionEstablishmentRequest  IE_list=[<IE_NodeId  id_type=IPv4 ipv4=192.168.14.111 |>, <IE_FSEID  v4=1 seid=0x8ca71035e5154265 ipv4=192.168.14.111 |>, <IE_CreatePDR  IE_list=[<IE_PDR_Id  id=1 |>, <IE_Precedence  precedence=65535 |>, <IE_PDI  IE_list=[<IE_SourceInterface  interface=Core |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_UE_IP_Address  SD=1 V4=1 ipv4=10.45.0.2 |>, <IE_3GPP_InterfaceType  interface_type=N6 |>] |>, <IE_FAR_Id  id=1 |>] |>, <IE_CreatePDR  IE_list=[<IE_PDR_Id  id=2 |>, <IE_Precedence  precedence=65535 |>, <IE_PDI  IE_list=[<IE_SourceInterface  interface=Access |>, <IE_FTEID  V4=1 TEID=0x1 ipv4=192.168.13.151 |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_SDF_Filter  FD=1 flow_description=b'permit out ip from any to assigned' |>, <IE_QFI  QFI=1 |>, <IE_3GPP_InterfaceType  interface_type=N3 3GPP Access |>] |>, <IE_FAR_Id  id=2 |>, <IE_OuterHeaderRemoval  |>] |>, <IE_CreateFAR  IE_list=[<IE_FAR_Id  id=1 |>, <IE_ApplyAction  FORW=1 |>, <IE_ForwardingParameters  IE_list=[<IE_DestinationInterface  interface=Access |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_OuterHeaderCreation  GTPUUDPIPV4=1 TEID=0x2 ipv4=192.168.13.131 |>, <IE_3GPP_InterfaceType  interface_type=N3 3GPP Access |>] |>] |>, <IE_CreateFAR  IE_list=[<IE_FAR_Id  id=2 |>, <IE_ApplyAction  FORW=1 |>, <IE_ForwardingParameters  IE_list=[<IE_DestinationInterface  interface=Core |>, <IE_NetworkInstance  instance=b'internet' |>, <IE_3GPP_InterfaceType  interface_type=N6 |>] |>] |>, <IE_PDNType  pdn_type=IPv6 |>, <IE_APN_DNN  apn_dnn=b'internet' |>] |>
 .
 Sent 1 packets.
-2025-01-16 20:10:08,649 - __main__ - INFO - REQ: 1
-2025-01-16 20:10:08,650 - __main__ - INFO - REQ: <PFCPHeartbeatResponse  IE_list=[<IE_RecoveryTimeStamp  timestamp=3946047003 |>] |>
+2025-02-11 12:02:08,783 - __main__ - INFO - REQ: 1
+2025-02-11 12:02:08,784 - __main__ - INFO - REQ: <PFCPHeartbeatResponse  IE_list=[<IE_RecoveryTimeStamp  timestamp=3948264123 |>] |>
 .
 Sent 1 packets.
 ...
