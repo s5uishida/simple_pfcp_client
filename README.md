@@ -209,6 +209,7 @@ I would like to thank the excellent developers and all the contributors of Scapy
 
 ## Sample Configurations
 
+- [Install TRex](https://github.com/s5uishida/install_trex)
 - [Simple Measurement of UPF Performance 6](https://github.com/s5uishida/simple_measurement_of_upf_performance_6)
 
 <a id="changelog"></a>
