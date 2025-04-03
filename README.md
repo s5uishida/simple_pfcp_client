@@ -152,7 +152,7 @@ If using UPF which requires QER in `PFCP Session Establishment Request`, please 
 
 ## Set parameters in pfcp_request.py
 
-Set the following parameters written in `pfcp_request.py`.
+Set the following parameters written in [pfcp_request.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request.py).
 
 | Item | Value (my environment) |
 | --- | --- |
@@ -168,7 +168,7 @@ Set the following parameters written in `pfcp_request.py`.
 | DL_TEID | 2 |
 | COUNTER | 100 |
 
-If using `pfcp_request_qer.py`, please set the following additional parameters. The unit is Kbps.
+If using [pfcp_request_qer.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request_qer.py), please set the following additional parameters. The unit is Kbps.
 
 | Item | Value (my environment) |
 | --- | --- |
