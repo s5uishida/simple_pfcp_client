@@ -141,18 +141,18 @@ According to `3GPP TS 29.244 - 8.2.118 3GPP Interface Type`, add interface types
 
 ### Install pfcp_request.py
 
-Get [pfcp_request.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request.py) written in Python.
+Get [pfcp_request.py](./src/pfcp_request.py) written in Python.
 ```
 # wget https://github.com/s5uishida/simple_pfcp_client/raw/refs/heads/main/src/pfcp_request.py
 ```
 Also, referring to [801room/upf_p4_poc/test_script/pfcp_request.py](https://github.com/801room/upf_p4_poc/blob/main/test_script/pfcp_request.py), I wrote this script to configure the open source UPFs - Open5GS UPF, free5GC UPF, UPG-VPP and eUPF.
-If using UPF which requires QER in `PFCP Session Establishment Request`, please refer to [pfcp_request_qer.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request_qer.py).
+If using UPF which requires QER in `PFCP Session Establishment Request`, please refer to [pfcp_request_qer.py](./src/pfcp_request_qer.py).
 
 <a id="set_param"></a>
 
 ## Set parameters in pfcp_request.py
 
-Set the following parameters written in [pfcp_request.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request.py).
+Set the following parameters written in [pfcp_request.py](./src/pfcp_request.py).
 
 | Item | Value (my environment) |
 | --- | --- |
@@ -168,7 +168,7 @@ Set the following parameters written in [pfcp_request.py](https://github.com/s5u
 | DL_TEID | 2 |
 | COUNTER | 100 |
 
-If using [pfcp_request_qer.py](https://github.com/s5uishida/simple_pfcp_client/blob/main/src/pfcp_request_qer.py), please set the following additional parameters. The unit is Kbps.
+If using [pfcp_request_qer.py](./src/pfcp_request_qer.py), please set the following additional parameters. The unit is Kbps.
 
 | Item | Value (my environment) |
 | --- | --- |
