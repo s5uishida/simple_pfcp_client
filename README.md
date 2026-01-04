@@ -56,7 +56,7 @@ The network interfaces of each VM are as follows.
 | VM1 | ens18 | VirtIO | vmbr1 | 10.0.0.111/24 | (NAPT NW) | -- |
 | | ens19 | VirtIO | mgbr0 | 192.168.0.111/24 | (Mgmt NW) | -- |
 | | ens20 | VirtIO | vmbr4 | 192.168.14.111/24 | N4 | -- |
-| VM-TG | ens18 | VirtIO | vmbr1 | 10.0.0.131/24 | (NAPT NW) | -- |
+| VM-TG | ~~ens18~~ | ~~VirtIO~~ | ~~vmbr1~~  | ~~10.0.0.131/24~~ | ~~(NAPT NW)~~ ***down*** | -- |
 | | ens19 | VirtIO | mgbr0 | 192.168.0.131/24 | (Mgmt NW) | -- |
 | | ens20 | VirtIO | vmbr3 | 192.168.13.131/24 | N3 | x |
 | | ens21 | VirtIO | vmbr6 | 192.168.16.152/24 | N6 | x |
