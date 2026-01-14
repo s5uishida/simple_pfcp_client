@@ -108,6 +108,7 @@ class PfcpSkeleton(object):
                     IE_SourceInterface(interface="Access"),
                     IE_FTEID(V4=1,TEID=UL_TEID,ipv4=N3_IP_V4),
                     IE_NetworkInstance(instance=NWI),
+                    self.ie_ue_ip_address(SD=0),
                     IE_SDF_Filter(
                         FD=1,
                         flow_description="permit out ip from any to assigned"),
