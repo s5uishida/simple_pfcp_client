@@ -1,6 +1,6 @@
 # Simple PFCP Client
 This describes how to use a simple PFCP client to configure UPF.
-This is intended as a preparation for measuring the performance of open source UPFs ([Open5GS UPF](https://github.com/open5gs/open5gs), [free5GC UPF](https://github.com/free5gc/go-upf), [UPG-VPP](https://github.com/travelping/upg-vpp) and [eUPF](https://github.com/edgecomllc/eupf)).
+This is intended as a preparation for measuring the performance of open source UPFs ([Open5GS UPF](https://github.com/open5gs/open5gs), [free5GC UPF](https://github.com/free5gc/go-upf), [UPG-VPP](https://github.com/travelping/upg-vpp), [eUPF](https://github.com/edgecomllc/eupf) and [OAI-CN5G-UPF](https://gitlab.eurecom.fr/oai/cn5g/oai-cn5g-upf)).
 
 ---
 
