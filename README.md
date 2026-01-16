@@ -217,5 +217,6 @@ I would like to thank the excellent developers and all the contributors of Scapy
 
 ## Changelog (summary)
 
+- [2026.01.14] Added `UE IP address IE` to PDI IE in `Create PDR IE within PFCP Session Establishment Request` for UpLink in `pfcp_request.py` and `pfcp_request_qer.py`.
 - [2025.01.25] Added the description of the case when using UPF which requires QER in PFCP Session Establishment Request.
 - [2025.01.16] Initial release.
