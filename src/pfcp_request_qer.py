@@ -79,7 +79,7 @@ class PfcpSkeleton(object):
             IE_RecoveryTimeStamp(timestamp=self.ts)
             ]))
 
-    def establish_session_request(self, gnb_ip, ue_ip):
+    def establish_session_request(self, gnb_ip, ue_ip, ul_teid, dl_teid):
         self.cur_seid = seid()
         resp = self.chat(PFCPSessionEstablishmentRequest(IE_list=[
             IE_NodeId(id_type=0, ipv4=self.pfcp_cp_ip),
@@ -102,7 +102,7 @@ class PfcpSkeleton(object):
                 IE_Precedence(precedence=65535),
                 IE_PDI(IE_list=[
                     IE_SourceInterface(interface="Access"),
-                    IE_FTEID(V4=1, TEID=UL_TEID, ipv4=N3_IP_V4),
+                    IE_FTEID(V4=1, TEID=ul_teid, ipv4=N3_IP_V4),
                     IE_NetworkInstance(instance=NWI),
                     IE_UE_IP_Address(ipv4=ue_ip, V4=1, SD=0),
                     IE_SDF_Filter(
@@ -122,7 +122,7 @@ class PfcpSkeleton(object):
                 IE_ForwardingParameters(IE_list=[
                     IE_DestinationInterface(interface="Access"),
                     IE_NetworkInstance(instance=NWI),
-                    IE_OuterHeaderCreation(GTPUUDPIPV4=1, TEID=DL_TEID, ipv4=gnb_ip),
+                    IE_OuterHeaderCreation(GTPUUDPIPV4=1, TEID=dl_teid, ipv4=gnb_ip),
                     IE_3GPP_InterfaceType(interface_type="N3 3GPP Access")
                 ])
             ]),
@@ -184,7 +184,7 @@ class HeartBeatThread(threading.Thread):
 if __name__ =="__main__":
     pfcp_client = PfcpSkeleton(PFCP_CP_IP_V4, PFCP_UP_IP_V4)
     pfcp_client.associate()
-    pfcp_client.establish_session_request(GNB_IP_V4, UE_IP_V4)
+    pfcp_client.establish_session_request(GNB_IP_V4, UE_IP_V4, UL_TEID, DL_TEID)
 
     th = HeartBeatThread(1, "test", COUNTER, pfcp_client);
     th.start()
