@@ -156,16 +156,16 @@ Set the following parameters written in [pfcp_request.py](./src/pfcp_request.py)
 
 | Item | Value (my environment) |
 | --- | --- |
+| PFCP_CP_IFACE | "ens20" |
 | PFCP_CP_IP_V4 | "192.168.14.111" |
 | PFCP_UP_IP_V4 | "192.168.14.151" |
 | N3_IP_V4 | "192.168.13.151" |
 | GNB_IP_V4 | "192.168.13.131" |
 | UE_IP_V4 | "10.45.0.2" |
-| NWI | "internet" |
-| APN_DNN | "internet" |
-| PFCP_CP_IFACE | "ens20" |
 | UL_TEID | 1 |
 | DL_TEID | 2 |
+| NWI | "internet" |
+| APN_DNN | "internet" |
 | COUNTER | 100 |
 
 If using [pfcp_request_qer.py](./src/pfcp_request_qer.py), please set the following additional parameters. The unit is Kbps.
