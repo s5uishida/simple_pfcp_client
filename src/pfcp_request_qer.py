@@ -26,16 +26,18 @@ import logging
 import threading
 import signal,os
 
+PFCP_CP_IFACE = "ens20"
 PFCP_CP_IP_V4 = "192.168.14.111"
 PFCP_UP_IP_V4 = "192.168.14.151"
 N3_IP_V4 = "192.168.13.151"
+
 GNB_IP_V4 = "192.168.13.131"
 UE_IP_V4 = "10.45.0.2"
-NWI = "internet"
-APN_DNN = "internet"
-PFCP_CP_IFACE = "ens20"
 UL_TEID = 1
 DL_TEID = 2
+
+NWI = "internet"
+APN_DNN = "internet"
 COUNTER = 100
 UL_MBR = 200000000 # Kbps
 DL_MBR = 200000000 # Kbps
@@ -48,9 +50,9 @@ def seid():
     return uuid.uuid4().int & ((1 << 64) - 1)
 
 class PfcpSkeleton(object):
-    def __init__(self, pfcp_cp_ip, pfcp_up_ip):
-        self.pfcp_cp_ip = pfcp_cp_ip
-        self.pfcp_up_ip = pfcp_up_ip
+    def __init__(self):
+        self.pfcp_cp_ip = PFCP_CP_IP_V4
+        self.pfcp_up_ip = PFCP_UP_IP_V4
         self.ts = int((datetime.now() - datetime(1900, 1, 1)).total_seconds())
         self.seq = next(counter)
         self.nodeId = IE_NodeId(id_type=0, ipv4=self.pfcp_cp_ip)
@@ -182,7 +184,7 @@ class HeartBeatThread(threading.Thread):
 
 
 if __name__ =="__main__":
-    pfcp_client = PfcpSkeleton(PFCP_CP_IP_V4, PFCP_UP_IP_V4)
+    pfcp_client = PfcpSkeleton()
     pfcp_client.associate()
     pfcp_client.establish_session_request(GNB_IP_V4, UE_IP_V4, UL_TEID, DL_TEID)
 
