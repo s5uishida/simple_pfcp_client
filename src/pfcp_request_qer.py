@@ -1,5 +1,6 @@
 from datetime import datetime
 import uuid
+import itertools
 from random import getrandbits
 from scapy.contrib.pfcp import CauseValues, IE_3GPP_InterfaceType, IE_APN_DNN, IE_ApplyAction, IE_Cause, \
     IE_CreateFAR, IE_CreatePDR, IE_CreateQER, IE_CreateURR, IE_DestinationInterface, \
@@ -41,25 +42,20 @@ DL_MBR = 200000000 # Kbps
 UL_GBR = 200000000 # Kbps
 DL_GBR = 200000000 # Kbps
 
+counter = itertools.count()
+
 def seid():
-    return uuid.uuid4().int & (1 << 64) - 1
+    return uuid.uuid4().int & ((1 << 64) - 1)
 
 class PfcpSkeleton(object):
-    def __init__(self, pfcp_cp_ip,pfcp_up_ip):
+    def __init__(self, pfcp_cp_ip, pfcp_up_ip):
         self.pfcp_cp_ip = pfcp_cp_ip
         self.pfcp_up_ip = pfcp_up_ip
-        self.ue_ip = UE_IP_V4
         self.ts = int((datetime.now() - datetime(1900, 1, 1)).total_seconds())
-        self.seq = 1
-        self.nodeId = IE_NodeId(id_type=0, ipv4=PFCP_CP_IP_V4)
+        self.seq = next(counter)
+        self.nodeId = IE_NodeId(id_type=0, ipv4=self.pfcp_cp_ip)
         logging.basicConfig(level = logging.INFO,format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger(__name__)
-
-    def ie_ue_ip_address(self, SD=0):
-        return IE_UE_IP_Address(ipv4=self.ue_ip, V4=1, SD=SD)
-
-    def ie_fseid(self):
-        return IE_FSEID(ipv4=self.pfcp_cp_ip, v4=1, seid=self.cur_seid)
 
     def associate(self):
         self.chat(PFCPAssociationSetupRequest(IE_list=[
@@ -83,11 +79,11 @@ class PfcpSkeleton(object):
             IE_RecoveryTimeStamp(timestamp=self.ts)
             ]))
 
-    def establish_session_request(self):
+    def establish_session_request(self, gnb_ip, ue_ip):
         self.cur_seid = seid()
         resp = self.chat(PFCPSessionEstablishmentRequest(IE_list=[
-            IE_NodeId(id_type=0, ipv4=PFCP_CP_IP_V4),
-            self.ie_fseid(),
+            IE_NodeId(id_type=0, ipv4=self.pfcp_cp_ip),
+            IE_FSEID(ipv4=self.pfcp_cp_ip, v4=1, seid=self.cur_seid),
 
             IE_CreatePDR(IE_list=[
                 IE_PDR_Id(id=1),
@@ -95,7 +91,7 @@ class PfcpSkeleton(object):
                 IE_PDI(IE_list=[
                     IE_SourceInterface(interface="Core"),
                     IE_NetworkInstance(instance=NWI),
-                    self.ie_ue_ip_address(SD=1),
+                    IE_UE_IP_Address(ipv4=ue_ip, V4=1, SD=1),
                     IE_3GPP_InterfaceType(interface_type="N6")
                 ]),
                 IE_FAR_Id(id=1),
@@ -106,9 +102,9 @@ class PfcpSkeleton(object):
                 IE_Precedence(precedence=65535),
                 IE_PDI(IE_list=[
                     IE_SourceInterface(interface="Access"),
-                    IE_FTEID(V4=1,TEID=UL_TEID,ipv4=N3_IP_V4),
+                    IE_FTEID(V4=1, TEID=UL_TEID, ipv4=N3_IP_V4),
                     IE_NetworkInstance(instance=NWI),
-                    self.ie_ue_ip_address(SD=0),
+                    IE_UE_IP_Address(ipv4=ue_ip, V4=1, SD=0),
                     IE_SDF_Filter(
                         FD=1,
                         flow_description="permit out ip from any to assigned"),
@@ -126,7 +122,7 @@ class PfcpSkeleton(object):
                 IE_ForwardingParameters(IE_list=[
                     IE_DestinationInterface(interface="Access"),
                     IE_NetworkInstance(instance=NWI),
-                    IE_OuterHeaderCreation(GTPUUDPIPV4=1,TEID=DL_TEID,ipv4=GNB_IP_V4),
+                    IE_OuterHeaderCreation(GTPUUDPIPV4=1, TEID=DL_TEID, ipv4=gnb_ip),
                     IE_3GPP_InterfaceType(interface_type="N3 3GPP Access")
                 ])
             ]),
@@ -150,7 +146,7 @@ class PfcpSkeleton(object):
 
             IE_PDNType(pdn_type=1),
             IE_APN_DNN(apn_dnn=APN_DNN)
-        ]), seid=0)
+        ]), seid=seid())
 
     def chat(self, pkt, seq=None,seid=None):
         self.logger.info("REQ: %r" % pkt)
@@ -164,7 +160,7 @@ class PfcpSkeleton(object):
                 seq=self.seq if seq is None else seq) /
                 pkt)
         if seq is None:
-            self.seq +=1 
+            self.seq = next(counter)
 
     def signal_fun(self,signum,frame):
         self.chat(PFCPAssociationReleaseRequest(IE_list=[
@@ -173,7 +169,7 @@ class PfcpSkeleton(object):
         os._exit(0)
 
 class HeartBeatThread(threading.Thread):
-    def __init__(self, threadID, name, counter,ass):
+    def __init__(self, threadID, name, counter, ass):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
@@ -186,9 +182,9 @@ class HeartBeatThread(threading.Thread):
 
 
 if __name__ =="__main__":
-    pfcp_client = PfcpSkeleton(PFCP_CP_IP_V4,PFCP_UP_IP_V4)
+    pfcp_client = PfcpSkeleton(PFCP_CP_IP_V4, PFCP_UP_IP_V4)
     pfcp_client.associate()
-    pfcp_client.establish_session_request()
+    pfcp_client.establish_session_request(GNB_IP_V4, UE_IP_V4)
 
     th = HeartBeatThread(1, "test", COUNTER, pfcp_client);
     th.start()
