@@ -106,6 +106,10 @@ Set venv to `~/venv`.
 # source ~/venv/bin/activate
 (venv) root@pfcp:~#
 ```
+To exit Python venv, do the following.
+```
+(venv) root@pfcp:~# deactivate
+```
 
 <a id="install_scapy"></a>
 
