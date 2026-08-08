@@ -125,11 +125,21 @@ To exit Python venv, do the following.
 ### Modify pfcp.py
 
 According to `3GPP TS 29.244 - 8.2.118 3GPP Interface Type`, add interface types `SGi` and `N6` in `pfcp.py` as follows.
+Furthermore, add the following actions for `3GPP TS 29.244 - 8.2.26 Apply Action`.
+
+- DFRT - Duplicate for Redundant Transmission
+- IPMD - IP Multicast Deny
+- IPMA - IP Multicast Accept
+- MBSU - Forward and replicate MBS data using Unicast transport
+- FSSM - Forward packets to lower layer SSM
+- DDPN - Discarded Downlink Packet Notification
+- BDPN - Buffered Downlink Packet Notification
+- EDRT - Eliminate Duplicate Packets for Redundant Transmission
 
 `~/venv/lib/python3.12/site-packages/scapy/contrib/pfcp.py`
 ```diff
 --- pfcp.py.orig        2024-12-14 06:09:59.763278982 +0900
-+++ pfcp.py     2024-12-17 22:00:09.601881929 +0900
++++ pfcp.py     2026-08-09 00:56:09.693732239 +0900
 @@ -363,6 +363,8 @@
      13: "N3 Untrusted Non-3GPP Access",
      14: "N3 for data forwarding",
@@ -138,6 +148,28 @@ According to `3GPP TS 29.244 - 8.2.118 3GPP Interface Type`, add interface types
 +    17: "N6",
  }
  
+ 
+@@ -1034,12 +1036,20 @@
+     name = "IE Apply Action"
+     ie_type = 44
+     fields_desc = IE_Base.fields_desc + [
+-        XBitField("spare", None, 3),
++        BitField("DFRT", 0, 1),
++        BitField("IPMD", 0, 1),
++        BitField("IPMA", 0, 1),
+         BitField("DUPL", 0, 1),
+         BitField("NOCP", 0, 1),
+         BitField("BUFF", 0, 1),
+         BitField("FORW", 0, 1),
+         BitField("DROP", 0, 1),
++        XBitField("spare", None, 3),
++        BitField("MBSU", 0, 1),
++        BitField("FSSM", 0, 1),
++        BitField("DDPN", 0, 1),
++        BitField("BDPN", 0, 1),
++        BitField("EDRT", 0, 1),
+         ExtraDataField("extra_data"),
+     ]
  
 ```
 
@@ -222,6 +254,7 @@ I would like to thank the excellent developers and all the contributors of Scapy
 
 ## Changelog (summary)
 
+- [2026.08.08] Added support for additional actions of `3GPP TS 29.244 - 8.2.26 Apply Action` in `pfcp.py` of Scapy. This enables support for [Open5GS commit - core: reject invalid fixed-width TLV integer lengths](https://github.com/open5gs/open5gs/commit/e6b8f21b316ff343de3d492684bfbd507328ae9e).
 - [2026.01.14] Added `UE IP address IE` to `PDI IE` in `Create PDR IE within PFCP Session Establishment Request` for UpLink in `pfcp_request.py` and `pfcp_request_qer.py`.
 - [2025.01.25] Added the description of the case when using UPF which requires QER in PFCP Session Establishment Request.
 - [2025.01.16] Initial release.
